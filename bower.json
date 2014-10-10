@@ -1,0 +1,18 @@
+{
+  "name": "countdown",
+  "version": "0.0.1",
+  "authors": [
+    "Anton Ermak <Rayman.k26@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "FlipClock": "~0.7.4"
+  }
+}

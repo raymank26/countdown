@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="bower_components/FlipClock/compiled/flipclock.css">
+        <style type="text/css" media="all">
+#clock {
+    /*margin: 0 auto; */
+    /*transform: scale(2, 2);*/
+}
+.container {
+    display: table;
+    margin: 0 auto;
+    margin-top: 10%;
+    transform: scale(2, 2);
+}
+.flip-clock-label {
+    display: none
+}
+            
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="your-clock" id="clock"></div>
+        </div>
+        <audio id="alarm" src="hack-alarm.wav" preload="auto"></audio>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/FlipClock/compiled/flipclock.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            function getUrlParameter(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++) 
+                {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam) 
+                    {
+                        return sParameterName[1];
+                    }
+                }
+            }          
+$(document).ready(function () {
+            // var countdown = getUrlParameter("countdown") || false;
+            var h = parseInt(getUrlParameter("h")) || 0;
+            var m = parseInt(getUrlParameter("m")) || 0;
+            var s = parseInt(getUrlParameter("s")) || 0;
+            var next_day = getUrlParameter("next") || false;
+            var to = getUrlParameter("to") || false;
+            var sound = getUrlParameter("sound") || false;
+            var played = false;
+
+            var clock = new FlipClock($(".your-clock"), {
+                    countdown: true,
+                    stop: function () {
+                    if(!played && sound) {
+                            played = true;
+                            document.getElementById("alarm").play();
+                   
+                            }}});
+            if(!to) {
+                clock.setTime((h * 60 + m) * 60 + s);
+            }
+            else {
+                var to = new Date();
+                if(next_day) {
+                    to.setDate(to.getDate() + 1);
+                }
+                to.setHours(h);
+                to.setMinutes(m);
+                var dif = to.getTime() - (new Date()).getTime();
+
+                clock.setTime(Math.abs(dif / 1000));
+            }
+            clock.start();
+        })
+        </script>
+    </body>
+</html>
