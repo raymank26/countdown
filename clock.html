@@ -67,6 +67,7 @@ $(document).ready(function () {
                 }
                 to.setHours(h);
                 to.setMinutes(m);
+                to.setSeconds(s);
                 var dif = to.getTime() - (new Date()).getTime();
 
                 clock.setTime(Math.abs(dif / 1000));
